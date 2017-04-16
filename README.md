@@ -1,5 +1,5 @@
 # goCon
-Produce consumer problem in GO
+Producer consumer problem in GO
 
 This is a simple multi-threaded implementation of the Producer consumer problem. This was done in order to explore the golang concurrency features. The problem relies on a simple application of threads(go routines) and mutexes to prevent data races.
 
