@@ -2,24 +2,30 @@ package main
 
 import "fmt"
 
+//Globals
+var buffer int = 0
+var iterations int = 10
+
 func main() {
-    var buffer int = 0
-    var iterations int = 10
-	produce := func (buf int) int {
-		buf++
-		fmt.Println(buf)
-		return buf
-	}
-	consume := func (buf int) int {
-		buf--
-		fmt.Println(buf)
-		return buf
-	}
-	for i := 0; i < iterations; i++ {
-		buffer = produce(buffer)
-	}
-	for i := 0; i < iterations; i++ {
-		buffer = consume(buffer)
-	}
+	threadProduce()
+	threadConsume()
 }
 
+func threadProduce() {
+	for i:= 0; i < iterations; i++ {
+		produce()
+	}
+}
+func threadConsume() {
+	for i:= 0; i < iterations; i++ {
+		consume()
+	}
+}
+func produce () {
+	buffer++
+	fmt.Println(buffer)
+}
+func consume () {
+	buffer--
+	fmt.Println(buffer)
+}
