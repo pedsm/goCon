@@ -1,12 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 //Globals
 var buffer int = 0
-var iterations int = 10000
+var iterations int = 100000
 var produceChannel chan int = make(chan int)
 var consumeChannel chan int = make(chan int)
+var mutex = &sync.Mutex{}
 
 func main() {
 	go threadProduce()
@@ -33,10 +37,14 @@ func threadConsume() {
 	consumeChannel <- 1
 }
 func produce () {
+	mutex.Lock()
 	buffer++
+	mutex.Unlock()
 	fmt.Println(buffer)
 }
 func consume () {
+	mutex.Lock()
 	buffer--
-	fmt.Println(buffer0)
+	mutex.Unlock()
+	fmt.Println(buffer)
 }
