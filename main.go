@@ -7,7 +7,7 @@ import (
 
 //Globals
 var buffer int = 0
-var iterations int = 100000
+var iterations int = 100000 //Increase the iterations to check for data races.
 //Channels allow the main thread to identify the end of a child thread.
 var produceChannel chan int = make(chan int) 
 var consumeChannel chan int = make(chan int)
@@ -41,7 +41,7 @@ func threadConsume() {
 	}
 	consumeChannel <- 1
 }
-//Helper functions
+//Helper functions can be implemented inside the thread logic
 func produce () {
 	mutex.Lock()
 	buffer++
@@ -57,8 +57,7 @@ func consume () {
 			mutex.Unlock()
 			break
 		}
-		//Make sure to unlock the mutex in order for the producer to work
-		mutex.Unlock()	
+		mutex.Unlock() //Make sure to unlock the mutex in order for the producer to work
 	}
 	mutex.Lock()
 	buffer--
