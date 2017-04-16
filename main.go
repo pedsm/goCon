@@ -43,6 +43,14 @@ func produce () {
 	fmt.Println(buffer)
 }
 func consume () {
+	for{
+		mutex.Lock()
+		if buffer > 0 {
+			mutex.Unlock()
+			break
+		}
+		mutex.Unlock()	
+	}
 	mutex.Lock()
 	buffer--
 	mutex.Unlock()
